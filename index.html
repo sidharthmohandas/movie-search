@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 px-4" id="box">
+                <h3 style="text-align: center;">Movie Search App</h3>
+                <input type="text" class="form-control" placeholder="Search your movie" id="moviename">
+                <div class="text-center pb-4">
+                    <button onclick="search()" class="btn btn-primary form-control d-grid mt-3">Search</button>
+                </div>
+                <div id="result">
+             </div>
+            </div>
+            <div class="col-4"></div>
+           </div>
+        </div>
+    <script>
+function search() {
+    var movieName = document.getElementById("moviename").value
+    console.log(movieName);
+
+    if (movieName == "") {
+        alert("Please enter the field !")
+    } else {
+        fetch(`https://www.omdbapi.com/?apikey=df82801&t=${movieName}`)
+            .then(data => data.json())
+            .then(movieDet => display(movieDet))
+    }
+}
+
+function display(movieDet) {
+    htmlData = `<h3>${movieDet.Title}(${movieDet.Year})</h3>
+                  <p>Plot:${movieDet.Plot}</p> <br>
+                  <p>Director:${movieDet.Director}</p>
+                  <p>Actors:${movieDet.Actors}</p> 
+                  <p>Ratings:</p>
+                  <ul>
+                      <li>${movieDet.Ratings[0].Source}:${movieDet.Ratings[0].Value}</li>
+                  </ul>
+                  </p>`
+    result.innerHTML = htmlData
+}
+    </script>
+</body>
+</html>
